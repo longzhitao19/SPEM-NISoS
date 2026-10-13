@@ -1,0 +1,2 @@
+BOPTEST_SECURITY_PROTECTION_EFFECTIVENESS.csv contains the original experiment's effectiveness summary.
+prepare_data.py uses it to check recalculated results. No separate execution is required.

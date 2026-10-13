@@ -1,0 +1,51 @@
+Section 4.2: generating BOPTEST simulation data
+
+Purpose: run the BOPTEST building simulator under 16 RCIH configurations for matched attack challenges and produce temperature, control, security-capability time series, and paired outcomes. This directory contains simulation client code without plotting code.
+
+1. Requirements
+Python 3.11, numpy, pandas, and requests.
+Install: python -m pip install numpy pandas requests
+pyarrow is optional for additional Parquet output; CSV output is always produced.
+Docker Desktop, the BOPTEST 0.9.0 server, and the multizone_office_simple_air test case are required. The existing server on this machine is at D:\Research\project1-boptest-0.9.0. The server, FMUs, and Docker images are external to this package.
+In an already configured server directory with the test case deployed, run:
+Set-Location 'D:\Research\project1-boptest-0.9.0'
+docker compose up -d
+The default service URL is http://127.0.0.1. On a new machine, install and configure the BOPTEST server and deploy the test case first.
+
+2. Check the service and experiment design
+Change to the directory containing this instruction file, then run:
+python -B -X utf8 -m boptest_esec.formal_preflight --base-url http://127.0.0.1 --formal-replicates 20
+For a design-only check, append --skip-service. This option does not verify service or FMU execution.
+
+3. Generate simulation data
+From this directory, run:
+powershell -ExecutionPolicy Bypass -File .\boptest_esec\run_campaign_v0811.ps1 -Python python -BaseUrl http://127.0.0.1 -Workers 12
+The entry first runs the N=1 screening with 272 trials. Only after screening postflight passes does it start the N=20 formal experiment with 5,136 trials and perform formal postflight checks.
+4 attack types x 4 intensities x 20 replicates x 16 configurations = 5,120 attacked trials, plus 16 benign trials.
+Step: 300 seconds. Trial duration: 21,600 seconds. Common evaluation window after attack onset: 16,200 seconds. Design seed: 20260915.
+Workers specifies requested concurrency; effective concurrency depends on service capacity and is recorded in the run state.
+
+4. Result files
+Formal output directory: boptest_esec/results/formal_v0811_N20
+physical_security_timeseries.csv: temperatures, control outputs, security capability, and protection states at each time step.
+paired_outcomes.csv: per-trial evaluation outcomes for matched comparisons across 16 configurations.
+challenge_manifest.csv: attacks, intensities, replicates, and randomized challenge parameters.
+chain_state_timeseries.csv, mechanism_events.csv, and raw_security_events.csv: chain states, protection actions, and attack events.
+analysis/BOPTEST_SECURITY_PROTECTION_EFFECTIVENESS.csv: effectiveness summary for the formal experiment.
+Other CSV files in analysis: experiment validity, dynamic benefit/harm, and physical metrics.
+The screening and formal supervisor directories contain execution logs and preflight records.
+
+5. Resume an interrupted run
+Keep the same parameters, version, and output directory. Repeat the command in Step 3 with -ResumeExisting.
+trial_checkpoints.txt stores completed trials; checkpoint_manifest.txt stores progress; design_fingerprint.txt checks design consistency; run_manifest.txt records run status. These files are maintained by the program and should not be edited manually.
+To keep JSON files out of this package, structured serialization is retained internally while checkpoint and metadata filenames use the TXT extension. New checkpoints cannot be directly mixed with historical JSON/JSONL checkpoints, which remain in the separate backup and original experiment directories.
+
+6. Use new simulation outputs for manuscript calculations
+First back up the parent raw_data directory outside this package. Only after formal postflight passes, copy physical_security_timeseries.csv, paired_outcomes.csv, and challenge_manifest.csv from the new formal output directory to the parent raw_data directory. Copy the new analysis/BOPTEST_SECURITY_PROTECTION_EFFECTIVENESS.csv to the parent's raw_data/analysis directory.
+Then change to the parent 4_2_BOPTEST directory and run:
+python -B -X utf8 source/prepare_data.py
+python -B -X utf8 source/compute_max_deviation.py
+Manuscript calculation outputs are written to source_data, including configuration_results.csv, condition_results.csv, mechanism_results.csv, and temperature-deviation results.
+
+Validation boundary: module imports, command entry points, PowerShell syntax, and N=1/N=20 design checks have passed. Neither the service nor the 272/5,136 physical trials were rerun during packaging. The code reports v0.8.11, matching the original run manifest; historical per-file source hashes are unavailable, so exact file identity with the original execution cannot be established.
+

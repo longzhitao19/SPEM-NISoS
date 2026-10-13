@@ -1,0 +1,2 @@
+Completed BOPTEST experiment inputs: time series, paired trial outcomes, and challenge definitions.
+No separate execution is required. Scripts in source read these CSV files and write results to source_data.

@@ -1,0 +1,6 @@
+This directory contains the boptest_esec simulation client package. Run commands from the parent directory rather than executing runner.py directly.
+Entry: powershell -ExecutionPolicy Bypass -File .\boptest_esec\run_campaign_v0811.ps1 -BaseUrl http://127.0.0.1 -Workers 12
+Results: results/formal_v0811_N20/physical_security_timeseries.csv, paired_outcomes.csv, challenge_manifest.csv, and statistical CSV files in analysis.
+runner.py drives trials; client.py connects to the physical simulator; protocol.py defines the experiment; fault_injection.py injects attacks; observable_runtime_v6.py executes protection actions; topology.py defines paths; formal_preflight.py and formal_postflight.py perform preflight and postflight checks. The remaining modules are required dependencies.
+Detailed instructions are in the parent directory's RUN_INSTRUCTIONS.txt.
+

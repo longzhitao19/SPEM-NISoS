@@ -1,0 +1,5 @@
+To generate raw Section 4.2 simulation data, see Simulation/RUN_INSTRUCTIONS.txt.
+To recalculate the existing 5,136 trials, run from this directory:
+python -B -X utf8 source/prepare_data.py
+python -B -X utf8 source/compute_max_deviation.py
+Results are written to source_data. These analysis commands do not start physical simulations.

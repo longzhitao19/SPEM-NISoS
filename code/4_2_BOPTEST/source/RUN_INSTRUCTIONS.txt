@@ -1,0 +1,4 @@
+Run from the parent directory:
+python -B -X utf8 source/prepare_data.py
+python -B -X utf8 source/compute_max_deviation.py
+The first script produces effectiveness, mechanism contribution, and bootstrap results. The second produces maximum zone-temperature deviation results. Both write to the parent's source_data directory.

@@ -1,0 +1,7 @@
+Requirements: Python 3.11, numpy, pandas, and scipy.
+Install: python -m pip install numpy pandas scipy
+From this directory, run: python -B -X utf8 run_calculations.py
+Results: 4_1_examples/source_data, 4_1_examples/comparison, and 4_2_BOPTEST/source_data.
+This entry recalculates completed experiment data and does not generate figures.
+To generate new Section 4.2 simulation data, see 4_2_BOPTEST/Simulation/RUN_INSTRUCTIONS.txt.
+Earlier plotting materials remain in the separate backup directory outside this package.
