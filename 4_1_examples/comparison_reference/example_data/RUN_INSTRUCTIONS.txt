@@ -1,2 +1,0 @@
-CSV inputs containing scores for 48 theoretical configurations and topology comparisons.
-No separate execution is required. They are read by analyze_method_comparison.py, which writes results to comparison.

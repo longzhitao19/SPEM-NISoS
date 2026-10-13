@@ -1,2 +1,0 @@
-Reference inputs for method comparison. No separate execution is required.
-Read by analyze_method_comparison.py in the parent directory. Results are written to the parent's comparison directory.

@@ -1,3 +1,0 @@
-caculate_th.py implements the theoretical model and is imported by the analysis scripts in the parent directory.
-The two CSV files are reference results used for numerical checks.
-Recommended entry: run analyze_theory.py from the parent directory. Results are written to the parent's source_data directory.

@@ -1,2 +1,0 @@
-XX3_discrimination.csv provides reference discrimination metrics for numerical checks.
-No separate execution is required. It is read by analyze_method_comparison.py, which writes results to comparison.

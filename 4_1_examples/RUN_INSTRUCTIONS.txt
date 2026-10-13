@@ -1,4 +1,0 @@
-Run from this directory:
-python -B -X utf8 analyze_theory.py
-python -B -X utf8 analyze_method_comparison.py
-Results: source_data contains effectiveness, benefit, harm, mechanism contribution, and uncertainty CSV files; comparison contains method comparison CSV files.
